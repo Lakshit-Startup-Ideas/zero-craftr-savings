@@ -11,10 +11,14 @@ import Proof from "@/components/Proof";
 import PricingCTA from "@/components/PricingCTA";
 import Footer from "@/components/Footer";
 import StickyCTA from "@/components/StickyCTA";
+import StructuredData from "@/components/StructuredData";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <StructuredData type="organization" />
+      <StructuredData type="product" />
+      <StructuredData type="faq" />
       <Header />
       <TrustStrip />
       <main>
