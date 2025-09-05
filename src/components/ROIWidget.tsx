@@ -3,31 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Calculator, TrendingUp, DollarSign } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Doughnut, Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-} from 'chart.js';
-
-ChartJS.register(
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title
-);
+import { Calculator } from "lucide-react";
 
 const ROIWidget = () => {
   const [monthlySpend, setMonthlySpend] = useState("");
@@ -94,116 +70,24 @@ const ROIWidget = () => {
               </div>
             </div>
 
-            <AnimatePresence>
-              {monthlySpend && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="bg-mint-soft rounded-lg p-6 mb-6"
-                >
-                  <div className="grid md:grid-cols-3 gap-6">
-                    {/* Savings Display */}
-                    <div className="md:col-span-2">
-                      <div className="grid grid-cols-2 gap-4 text-center mb-4">
-                        <motion.div
-                          initial={{ scale: 0.8 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.2 }}
-                        >
-                          <div className="flex items-center justify-center mb-2">
-                            <DollarSign className="h-6 w-6 text-primary mr-1" />
-                            <div className="text-3xl font-bold text-primary">
-                              ${monthlySavings.toLocaleString()}
-                            </div>
-                          </div>
-                          <div className="text-sm text-muted-foreground">Monthly Savings</div>
-                        </motion.div>
-                        <motion.div
-                          initial={{ scale: 0.8 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.4 }}
-                        >
-                          <div className="flex items-center justify-center mb-2">
-                            <TrendingUp className="h-6 w-6 text-accent mr-1" />
-                            <div className="text-3xl font-bold text-accent">
-                              ${annualSavings.toLocaleString()}
-                            </div>
-                          </div>
-                          <div className="text-sm text-muted-foreground">Annual Savings</div>
-                        </motion.div>
-                      </div>
-                      
-                      {/* Savings Breakdown Chart */}
-                      <motion.div 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.6 }}
-                        className="h-32"
-                      >
-                        <Line
-                          data={{
-                            labels: ['Month 1', 'Month 3', 'Month 6', 'Month 12'],
-                            datasets: [{
-                              label: 'Cumulative Savings ($)',
-                              data: [
-                                monthlySavings,
-                                monthlySavings * 3,
-                                monthlySavings * 6,
-                                annualSavings
-                              ],
-                              borderColor: 'hsl(158, 73%, 38%)',
-                              backgroundColor: 'hsl(158, 73%, 38%, 0.1)',
-                              tension: 0.4,
-                              fill: true,
-                            }]
-                          }}
-                          options={{
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
-                            scales: {
-                              x: { display: false },
-                              y: { display: false }
-                            }
-                          }}
-                        />
-                      </motion.div>
+            {monthlySpend && (
+              <div className="bg-mint-soft rounded-lg p-6 mb-6">
+                <div className="grid md:grid-cols-2 gap-6 text-center">
+                  <div>
+                    <div className="text-3xl font-bold text-primary">
+                      ${monthlySavings.toLocaleString()}
                     </div>
-                    
-                    {/* ROI Visualization */}
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.8 }}
-                      className="flex flex-col items-center"
-                    >
-                      <div className="w-24 h-24 mb-2">
-                        <Doughnut
-                          data={{
-                            labels: ['Savings', 'Current Spend'],
-                            datasets: [{
-                              data: [monthlySavings, parseFloat(monthlySpend) - monthlySavings],
-                              backgroundColor: ['hsl(158, 73%, 38%)', 'hsl(220, 13%, 91%)'],
-                              borderWidth: 0,
-                            }]
-                          }}
-                          options={{
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: { legend: { display: false } }
-                          }}
-                        />
-                      </div>
-                      <div className="text-center">
-                        <div className="text-lg font-bold text-primary">12%</div>
-                        <div className="text-xs text-muted-foreground">Energy Reduction</div>
-                      </div>
-                    </motion.div>
+                    <div className="text-sm text-muted-foreground">Monthly Savings</div>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  <div>
+                    <div className="text-3xl font-bold text-accent">
+                      ${annualSavings.toLocaleString()}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Annual Savings</div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Dialog open={isOpen} onOpenChange={setIsOpen}>

@@ -1,10 +1,6 @@
 import { Wrench, Database, Brain, FileBarChart } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
 
 const HowItWorks = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  
   const steps = [
     {
       icon: Wrench,
@@ -40,84 +36,35 @@ const HowItWorks = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {steps.map((step, index) => (
-            <motion.div 
-              key={index} 
-              className="relative group cursor-pointer"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              onHoverStart={() => setActiveStep(index)}
-            >
+            <div key={index} className="relative group">
               {/* Connection line */}
               {index < steps.length - 1 && (
-                <motion.div 
-                  className="hidden md:block absolute top-8 left-full w-8 h-px bg-border translate-x-4 z-10"
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  transition={{ duration: 0.8, delay: (index + 1) * 0.3 }}
-                  viewport={{ once: true }}
-                />
+                <div className="hidden md:block absolute top-8 left-full w-8 h-px bg-border translate-x-4 z-10" />
               )}
               
-              <motion.div 
-                className={`bg-background rounded-2xl p-8 shadow-card transition-all duration-300 relative ${
-                  activeStep === index ? 'shadow-lg scale-105' : ''
-                }`}
-                whileHover={{ y: -5 }}
-              >
+              <div className="bg-background rounded-2xl p-8 shadow-card group-hover:shadow-lg transition-all duration-300 relative">
                 {/* Step number */}
-                <motion.div 
-                  className="absolute -top-4 -left-4 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold"
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  transition={{ duration: 0.4, delay: index * 0.2 + 0.3 }}
-                  viewport={{ once: true }}
-                >
+                <div className="absolute -top-4 -left-4 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
                   {index + 1}
-                </motion.div>
+                </div>
                 
-                <motion.div 
-                  className="mb-6"
-                  initial={{ rotateY: -90 }}
-                  whileInView={{ rotateY: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
-                  viewport={{ once: true }}
-                >
+                <div className="mb-6">
                   <step.icon className="h-12 w-12 text-primary" />
-                </motion.div>
+                </div>
                 
-                <motion.h3 
-                  className="text-xl font-bold text-slate-dark mb-2"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.4, delay: index * 0.2 + 0.6 }}
-                  viewport={{ once: true }}
-                >
+                <h3 className="text-xl font-bold text-slate-dark mb-2">
                   {step.title}
-                </motion.h3>
+                </h3>
                 
-                <motion.p 
-                  className="text-accent font-medium text-sm mb-3"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.4, delay: index * 0.2 + 0.7 }}
-                  viewport={{ once: true }}
-                >
+                <p className="text-accent font-medium text-sm mb-3">
                   {step.description}
-                </motion.p>
+                </p>
                 
-                <motion.p 
-                  className="text-muted-foreground"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.4, delay: index * 0.2 + 0.8 }}
-                  viewport={{ once: true }}
-                >
+                <p className="text-muted-foreground">
                   {step.detail}
-                </motion.p>
-              </motion.div>
-            </motion.div>
+                </p>
+              </div>
+            </div>
           ))}
         </div>
       </div>
